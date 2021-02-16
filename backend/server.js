@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const colors = require("colors");
 const connectDB = require("./config/db");
 const productRoutes = require("./routes/productRoutes");
+const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 
 dotenv.config();
 
@@ -15,7 +16,11 @@ app.get("/", (req, res) => {
 });
 
 // Using product routes config
-app.use('/api/products', productRoutes)
+app.use("/api/products", productRoutes);
+
+// Custom error handlers connect
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
