@@ -1,5 +1,13 @@
 import React, { useEffect } from "react";
-import { Col, Row, ListGroup, Image, Card, Button, Form } from "react-bootstrap";
+import {
+    Col,
+    Row,
+    ListGroup,
+    Image,
+    Card,
+    Button,
+    Form,
+} from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Message from "../components/common/Message";
@@ -9,27 +17,26 @@ const CartScreen = ({ match, location, history }) => {
     const productId = match.params.id;
 
     const qty = location.search ? Number(location.search.split("=")[1]) : 1;
-    
-    
+
     const dispatch = useDispatch();
-    
+
     const cart = useSelector((state) => state.cart);
-    
+
     const { cartItems } = cart;
-    
+
     useEffect(() => {
         if (productId) {
             dispatch(addToCart(productId, qty));
         }
     }, [dispatch, productId, qty]);
-    
+
     const removeFromCartHandler = (id) => {
-        dispatch(removeFromCart(id))
-    }
+        dispatch(removeFromCart(id));
+    };
 
     const checkOutHandler = () => {
-        history.push('/login?redirect=shipping')
-    }
+        history.push("/login?redirect=shipping");
+    };
 
     return (
         <Row>
@@ -40,24 +47,36 @@ const CartScreen = ({ match, location, history }) => {
                         Your cart is empty <Link to="/">Go back</Link>
                     </Message>
                 ) : (
-                    <ListGroup variant='flush'>
-                        {cartItems.map(item => (
+                    <ListGroup variant="flush">
+                        {cartItems.map((item) => (
                             <ListGroup.Item key={item.product}>
                                 <Row>
                                     <Col md={2}>
-                                        <Image src={item.image} alt={item.name} fluid rounded/>
+                                        <Image
+                                            src={item.image}
+                                            alt={item.name}
+                                            fluid
+                                            rounded
+                                        />
                                     </Col>
                                     <Col md={3}>
-                                        <Link to={`/product/${item.product}`}>{item.name}</Link>
+                                        <Link to={`/product/${item.product}`}>
+                                            {item.name}
+                                        </Link>
                                     </Col>
+                                    <Col md={2}>${item.price}</Col>
                                     <Col md={2}>
-                                        ${item.price}
-                                    </Col>
-                                    <Col md={2}>
-                                    <Form.Control
+                                        <Form.Control
                                             as="select"
                                             value={item.qty}
-                                            onChange={(e) => (dispatch(addToCart(item.product, Number(e.target.value))))}
+                                            onChange={(e) =>
+                                                dispatch(
+                                                    addToCart(
+                                                        item.product,
+                                                        Number(e.target.value)
+                                                    )
+                                                )
+                                            }
                                         >
                                             {[
                                                 ...Array(
@@ -74,7 +93,15 @@ const CartScreen = ({ match, location, history }) => {
                                         </Form.Control>
                                     </Col>
                                     <Col md={2}>
-                                        <Button type="button" variant="light" onClick={() => removeFromCartHandler(item.product)}>
+                                        <Button
+                                            type="button"
+                                            variant="light"
+                                            onClick={() =>
+                                                removeFromCartHandler(
+                                                    item.product
+                                                )
+                                            }
+                                        >
                                             <i className="fas fa-trash"></i>
                                         </Button>
                                     </Col>
@@ -88,11 +115,31 @@ const CartScreen = ({ match, location, history }) => {
                 <Card>
                     <ListGroup variant="flush">
                         <ListGroup.Item>
-                            <h2>Subtotal: {cartItems.reduce((acc, item) => acc + item.qty, 0)} items</h2>
-                            ${cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}
+                            <h2>
+                                Subtotal:{" "}
+                                {cartItems.reduce(
+                                    (acc, item) => acc + item.qty,
+                                    0
+                                )}{" "}
+                                items
+                            </h2>
+                            $
+                            {cartItems
+                                .reduce(
+                                    (acc, item) => acc + item.qty * item.price,
+                                    0
+                                )
+                                .toFixed(2)}
                         </ListGroup.Item>
                         <ListGroup.Item>
-                            <Button type="button" className='btn-block' disabled={cartItems.length === 0} onClick={checkOutHandler}>Proceed To Checkout</Button>
+                            <Button
+                                type="button"
+                                className="btn-block"
+                                disabled={cartItems.length === 0}
+                                onClick={checkOutHandler}
+                            >
+                                Proceed To Checkout
+                            </Button>
                         </ListGroup.Item>
                     </ListGroup>
                 </Card>
