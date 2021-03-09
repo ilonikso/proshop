@@ -4,6 +4,7 @@ const colors = require("colors");
 const connectDB = require("./config/db");
 const productRoutes = require("./routes/productRoutes");
 const userRoutes = require("./routes/userRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 
 dotenv.config();
@@ -23,6 +24,8 @@ app.get("/", (req, res) => {
 app.use("/api/products", productRoutes);
 // Using user routes config
 app.use("/api/users", userRoutes);
+// Using order routes config
+app.use("/api/orders", orderRoutes);
 
 // Custom error handlers connect
 app.use(notFound);
