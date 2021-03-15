@@ -27,6 +27,9 @@ app.use("/api/users", userRoutes);
 // Using order routes config
 app.use("/api/orders", orderRoutes);
 
+// paypal config
+app.get('/api/config/paypal', (req, res) => res.send(process.env.PAYPAL_CLIENT_ID))
+
 // Custom error handlers connect
 app.use(notFound);
 app.use(errorHandler);
