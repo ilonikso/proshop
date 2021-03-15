@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import CheckoutSteps from "../components/common/CheckoutSteps";
 import Loader from "../components/common/Loader";
 import Message from "../components/common/Message";
 import { getOrderDetails } from "../redux/actions/order";
@@ -32,7 +31,7 @@ const OrderScreen = ({ match }) => {
 
     useEffect(() => {
         dispatch(getOrderDetails(orderId));
-    }, []);
+    }, [dispatch, orderId]);
 
     return loading ? (
         <Loader />
