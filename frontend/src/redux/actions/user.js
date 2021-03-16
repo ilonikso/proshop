@@ -12,8 +12,10 @@ import {
     USER_UPDATE_PROFILE_FAIL,
     USER_UPDATE_PROFILE_REQUEST,
     USER_UPDATE_PROFILE_SUCCESS,
+    USER_DETAILS_RESET,
 } from "../types/user";
 import axios from "axios";
+import { ORDER_LIST_MY_RESET } from "../types/order";
 
 export const login = (email, password) => async (dispatch) => {
     try {
@@ -55,6 +57,14 @@ export const login = (email, password) => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
     localStorage.removeItem("userInfo");
+
+    dispatch({
+        type: USER_DETAILS_RESET,
+    });
+
+    dispatch({
+        type: ORDER_LIST_MY_RESET,
+    });
 
     dispatch({
         type: USER_LOGOUT,
@@ -128,8 +138,6 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
             type: USER_DETAILS_SUCCESS,
             payload: data,
         });
-
-        
     } catch (error) {
         dispatch({
             type: USER_DETAILS_FAIL,
@@ -158,14 +166,12 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
             },
         };
 
-        const { data } = await axios.put(`/api/users/profile`,user,  config);
+        const { data } = await axios.put(`/api/users/profile`, user, config);
 
         dispatch({
             type: USER_UPDATE_PROFILE_SUCCESS,
             payload: data,
         });
-
-        
     } catch (error) {
         dispatch({
             type: USER_UPDATE_PROFILE_FAIL,
