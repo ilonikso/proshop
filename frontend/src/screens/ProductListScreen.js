@@ -3,7 +3,7 @@ import { Table, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/common/Message";
 import Loader from "../components/common/Loader";
-import { listProducts } from "../redux/actions/productList";
+import { deleteProduct, listProducts } from "../redux/actions/productList";
 import { LinkContainer } from "react-router-bootstrap";
 
 const ProductListScreen = ({ history, match }) => {
@@ -15,22 +15,28 @@ const ProductListScreen = ({ history, match }) => {
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
 
+    const productDelete = useSelector((state) => state.productDelete);
+    const {
+        loading: loadingDelete,
+        error: errorDelete,
+        success: successDelete,
+    } = productDelete;
+
     useEffect(() => {
         if (userInfo && userInfo.isAdmin) {
             dispatch(listProducts());
         } else {
             history.push("/login");
         }
-    }, [dispatch, history, userInfo]);
+    }, [dispatch, history, userInfo, successDelete]);
 
     const createProductHandler = (product) => {
-        console.log('Create product')
-    }
+        console.log("Create product");
+    };
 
     const deleteHandler = (id) => {
         if (window.confirm("Are you sure?")) {
-            // DELETE PRODUCTS
-            // dispatch(deleteUser(userId))
+            dispatch(deleteProduct(id));
         }
     };
 
@@ -42,10 +48,13 @@ const ProductListScreen = ({ history, match }) => {
                 </Col>
                 <Col className="text-right">
                     <Button className="my-3" onClick={createProductHandler}>
-                        <i className="fas fa-plus mr-2"></i>  Create Product
+                        <i className="fas fa-plus mr-2"></i> Create Product
                     </Button>
                 </Col>
             </Row>
+
+            {loadingDelete && <Loader />}
+            {errorDelete && <Message variant="danger">{errorDelete}</Message>}
 
             {loading ? (
                 <Loader />
