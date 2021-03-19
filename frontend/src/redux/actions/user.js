@@ -26,6 +26,7 @@ import {
 } from "../types/user";
 import axios from "axios";
 import { ORDER_LIST_MY_RESET } from "../types/order";
+import { CART_CLEAR_ITEMS } from "../types/cart";
 
 export const login = (email, password) => async (dispatch) => {
     try {
@@ -79,6 +80,11 @@ export const logout = () => (dispatch) => {
     dispatch({
         type: USER_LIST_RESET,
     });
+
+    dispatch({
+        type: CART_CLEAR_ITEMS,
+    });
+    
 
     dispatch({
         type: USER_LOGOUT,
