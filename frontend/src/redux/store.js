@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import {
     productCreateReducer,
+    productCreateReviewReducer,
     productDeleteReducer,
     productListReducer,
     productUpdateReducer,
@@ -33,6 +34,7 @@ const reducer = combineReducers({
     productDelete: productDeleteReducer,
     productCreate: productCreateReducer,
     productUpdate: productUpdateReducer,
+    productCreateReview: productCreateReviewReducer,
     cart: CartReducer,
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,
