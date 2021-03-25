@@ -3,37 +3,47 @@ import { Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/common/Loader";
 import Message from "../components/common/Message";
+import Paginate from "../components/common/Paginate";
 import Product from "../components/Product/Product";
 import { listProducts } from "../redux/actions/productList";
 
-const HomeScreen = ({match}) => {
+const HomeScreen = ({ match }) => {
     const keyword = match.params.keyword;
+
+    const pageNumber = match.params.pageNumber || 1;
 
     const dispatch = useDispatch();
 
     const productList = useSelector((state) => state.productList);
-    const { loading, error, products } = productList;
+    const { loading, error, products, page, pages } = productList;
 
     useEffect(() => {
-        dispatch(listProducts(keyword));
-    }, [dispatch, keyword]);
+        dispatch(listProducts(keyword, pageNumber));
+    }, [dispatch, keyword, pageNumber]);
 
     return (
         <>
             <h1>Latest products</h1>
 
             {loading ? (
-                <Loader/>
+                <Loader />
             ) : error ? (
                 <Message variant="danger">{error}</Message>
             ) : (
-                <Row>
-                    {products.map((product) => (
-                        <Col sm={12} md={6} lg={4} xl={3} key={product._id}>
-                            <Product product={product} />
-                        </Col>
-                    ))}
-                </Row>
+                <>
+                    <Row>
+                        {products.map((product) => (
+                            <Col sm={12} md={6} lg={4} xl={3} key={product._id}>
+                                <Product product={product} />
+                            </Col>
+                        ))}
+                    </Row>
+                    <Paginate
+                        pages={pages}
+                        page={page}
+                        keyword={keyword ? keyword : ""}
+                    />
+                </>
             )}
         </>
     );
