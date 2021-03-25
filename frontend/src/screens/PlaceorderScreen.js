@@ -5,48 +5,65 @@ import { Link } from "react-router-dom";
 import CheckoutSteps from "../components/common/CheckoutSteps";
 import Message from "../components/common/Message";
 import { createOrder } from "../redux/actions/order";
+import { ORDER_CREATE_RESET } from "../redux/types/order";
+import { USER_DETAILS_RESET } from "../redux/types/user";
 
-const PlaceorderScreen = ({history}) => {
+const PlaceorderScreen = ({ history }) => {
     const dispatch = useDispatch();
-    
-    const cart = useSelector((state) =>state.cart);
 
-    const addDecimals = (num) => {
-        return (Math.round(num*100) / 100).toFixed(2);
+    const cart = useSelector((state) => state.cart);
+
+    if (!cart.shippingAddress.address) {
+        history.push("/shipping");
+    } else if (!cart.paymentMethod) {
+        history.push("/payment");
     }
 
+    const addDecimals = (num) => {
+        return (Math.round(num * 100) / 100).toFixed(2);
+    };
+
     // Calculate prices
-    cart.itemsPrice = addDecimals(cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0));
+    cart.itemsPrice = addDecimals(
+        cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+    );
 
     cart.shippingPrice = addDecimals(cart.itemsPrice > 1000 ? 0 : 50);
 
     cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
 
-    cart.totalPrice = addDecimals(Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice));
+    cart.totalPrice = addDecimals(
+        Number(cart.itemsPrice) +
+            Number(cart.shippingPrice) +
+            Number(cart.taxPrice)
+    );
 
-    const orderCreate = useSelector(state => state.orderCreate)
+    const orderCreate = useSelector((state) => state.orderCreate);
 
     const { order, success, error } = orderCreate;
 
     useEffect(() => {
-        if(success){
-            history.push(`/order/${order._id}`)
+        if (success) {
+            history.push(`/order/${order._id}`);
+            dispatch({ type: ORDER_CREATE_RESET });
+            dispatch({ type: USER_DETAILS_RESET });
         }
-    }, [history, success, order])
+    }, [history, success, order, dispatch]);
 
     const placeOrderHandler = () => {
         console.log("place order");
 
-        dispatch(createOrder({
-            orderItems: cart.cartItems,
-            shippingAddress: cart.shippingAddress,
-            paymentMethod: cart.paymentMethod,
-            itemsPrice: cart.itemsPrice,
-            shippingPrice: cart.shippingPrice,
-            taxPrice: cart.taxPrice,
-            totalPrice: cart.totalPrice,
-
-        }))
+        dispatch(
+            createOrder({
+                orderItems: cart.cartItems,
+                shippingAddress: cart.shippingAddress,
+                paymentMethod: cart.paymentMethod,
+                itemsPrice: cart.itemsPrice,
+                shippingPrice: cart.shippingPrice,
+                taxPrice: cart.taxPrice,
+                totalPrice: cart.totalPrice,
+            })
+        );
     };
     return (
         <>
@@ -139,7 +156,9 @@ const PlaceorderScreen = ({history}) => {
                             </ListGroup.Item>
 
                             <ListGroup.Item>
-                                {error && <Message variant='danger'>{error}</Message>}
+                                {error && (
+                                    <Message variant="danger">{error}</Message>
+                                )}
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Button

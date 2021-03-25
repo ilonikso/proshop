@@ -68,6 +68,9 @@ export const login = (email, password) => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
     localStorage.removeItem("userInfo");
+    localStorage.removeItem('cartItems')
+    localStorage.removeItem('shippingAddress')
+    localStorage.removeItem('paymentMethod')
 
     dispatch({
         type: USER_DETAILS_RESET,
@@ -85,10 +88,11 @@ export const logout = () => (dispatch) => {
         type: CART_CLEAR_ITEMS,
     });
     
-
     dispatch({
         type: USER_LOGOUT,
     });
+
+    document.location.href = '/login'
 };
 
 export const register = (name, email, password) => async (dispatch) => {
@@ -192,6 +196,8 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
             type: USER_UPDATE_PROFILE_SUCCESS,
             payload: data,
         });
+
+        dispatch({ type: USER_DETAILS_RESET })
     } catch (error) {
         dispatch({
             type: USER_UPDATE_PROFILE_FAIL,

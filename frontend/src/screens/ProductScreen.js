@@ -32,6 +32,7 @@ const ProductScreen = ({ match, history }) => {
     const {
         error: errorCreateReview,
         success: successCreateReview,
+        loading: loadingCreateReview
     } = productCreateReview;
 
     const userLogin = useSelector((state) => state.userLogin);
@@ -41,12 +42,14 @@ const ProductScreen = ({ match, history }) => {
 
     useEffect(() => {
         if (successCreateReview) {
-            setRating(0);
-            setComment("");
-            dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
+          setRating(0)
+          setComment('')
         }
-        dispatch(listProductDetails(match.params.id));
-    }, [dispatch, match, successCreateReview]);
+        if (!product._id || product._id !== match.params.id) {
+          dispatch(listProductDetails(match.params.id))
+          dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
+        }
+      }, [dispatch, match, successCreateReview, product._id])
 
     const addToCartHandler = () => {
         history.push(`/cart/${match.params.id}?qty=${qty}`);
@@ -197,6 +200,11 @@ const ProductScreen = ({ match, history }) => {
                                 ))}
                                 <ListGroup.Item>
                                     <h2>Write a customer review</h2>
+                                    {successCreateReview && (
+                                        <Message variant='success'>
+                                        Review submitted successfully
+                                        </Message>
+                                    )}
                                     {errorCreateReview && (
                                         <Message variant="danger">
                                             {errorCreateReview}
@@ -249,8 +257,9 @@ const ProductScreen = ({ match, history }) => {
                                                 ></Form.Control>
                                             </Form.Group>
                                             <Button
-                                                type="submit"
-                                                variant="primary"
+                                                disabled={loadingCreateReview}
+                                                type='submit'
+                                                variant='primary'
                                             >
                                                 Submit
                                             </Button>

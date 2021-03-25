@@ -6,6 +6,7 @@ import Loader from "../components/common/Loader";
 import { getUserDetails, updateUserProfile } from "../redux/actions/user";
 import { listMyOrders } from "../redux/actions/order";
 import { LinkContainer } from "react-router-bootstrap";
+import { USER_UPDATE_PROFILE_RESET } from "../redux/types/user";
 
 const ProfileScreen = ({ history }) => {
     const [email, setEmail] = useState("");
@@ -32,7 +33,8 @@ const ProfileScreen = ({ history }) => {
         if (!userInfo) {
             history.push("/login");
         } else {
-            if (!user.name) {
+            if (!user || !user.name || success) {
+                dispatch({ type: USER_UPDATE_PROFILE_RESET })
                 dispatch(getUserDetails("profile"));
                 dispatch(listMyOrders());
             } else {
@@ -40,7 +42,7 @@ const ProfileScreen = ({ history }) => {
                 setEmail(user.email);
             }
         }
-    }, [history, userInfo, dispatch, user]);
+    }, [history, userInfo, dispatch, user, success]);
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -160,7 +162,7 @@ const ProfileScreen = ({ history }) => {
                                 </td>
                                 <td>
                                     {order.isDelivered ? (
-                                        order.DeliveredAt.substring(0, 10)
+                                        order.deliveredAt.substring(0, 10)
                                     ) : (
                                         <i
                                             className="fas fa-times"
