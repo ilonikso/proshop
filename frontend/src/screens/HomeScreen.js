@@ -6,15 +6,17 @@ import Message from "../components/common/Message";
 import Product from "../components/Product/Product";
 import { listProducts } from "../redux/actions/productList";
 
-const HomeScreen = () => {
+const HomeScreen = ({match}) => {
+    const keyword = match.params.keyword;
+
     const dispatch = useDispatch();
 
     const productList = useSelector((state) => state.productList);
     const { loading, error, products } = productList;
 
     useEffect(() => {
-        dispatch(listProducts());
-    }, [dispatch]);
+        dispatch(listProducts(keyword));
+    }, [dispatch, keyword]);
 
     return (
         <>

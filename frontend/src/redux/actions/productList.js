@@ -19,13 +19,13 @@ import {
 import axios from "axios";
 import { PRODUCT_DETAILS_SUCCESS } from "../types/productDetails";
 
-export const listProducts = () => async (dispatch) => {
+export const listProducts = (keyword = '') => async (dispatch) => {
     try {
         dispatch({
             type: PRODUCT_LIST_REQUEST,
         });
 
-        const { data } = await axios.get("/api/products");
+        const { data } = await axios.get(`/api/products?keyword=${keyword}`);
 
         dispatch({
             type: PRODUCT_LIST_SUCCESS,
