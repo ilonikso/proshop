@@ -16,6 +16,7 @@ import Message from "../components/common/Message";
 import Loader from "../components/common/Loader";
 import { PRODUCT_CREATE_REVIEW_RESET } from "../redux/types/productList";
 import { createProductReview } from "../redux/actions/productList";
+import Meta from "../components/common/Meta";
 
 const ProductScreen = ({ match, history }) => {
     const [qty, setQty] = useState(1);
@@ -64,6 +65,7 @@ const ProductScreen = ({ match, history }) => {
 
     return (
         <>
+            
             <NavLink className="btn btn-light my-3 " to="/">
                 Go Back
             </NavLink>
@@ -74,6 +76,7 @@ const ProductScreen = ({ match, history }) => {
                 <Message variant="danger">{error}</Message>
             ) : (
                 <>
+                    <Meta title={product.name}/>
                     <Row>
                         <Col md={6}>
                             <Image
