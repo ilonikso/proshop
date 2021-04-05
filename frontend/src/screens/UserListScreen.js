@@ -87,7 +87,7 @@ const UserListScreen = ({ history }) => {
                                     </LinkContainer>
                                     <Button
                                         variant="danger"
-                                        className="btn-sm"
+                                        className="btn-sm ml-2"
                                         onClick={() => deleteHandler(user._id)}
                                     >
                                         <i className="fas fa-trash"></i>

@@ -49,7 +49,7 @@ const ProductScreen = ({ match, history }) => {
           dispatch(listProductDetails(match.params.id))
           dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
         }
-      }, [dispatch, match, successCreateReview, product._id])
+      }, [dispatch, match, successCreateReview, product._id, product.reviews])
 
     const addToCartHandler = () => {
         history.push(`/cart/${match.params.id}?qty=${qty}`);
@@ -183,7 +183,7 @@ const ProductScreen = ({ match, history }) => {
                     </Row>
                     <Row>
                         <Col md={6}>
-                            <h2>Reviews</h2>
+                            <h3 className="mt-2 pl-0">Reviews</h3>
                             {product.reviews.length === 0 && (
                                 <Message>No reviews</Message>
                             )}

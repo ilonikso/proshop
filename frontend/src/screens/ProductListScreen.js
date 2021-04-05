@@ -127,7 +127,7 @@ const ProductListScreen = ({ history, match }) => {
                                     </LinkContainer>
                                     <Button
                                         variant="danger"
-                                        className="btn-sm"
+                                        className="btn-sm ml-2"
                                         onClick={() =>
                                             deleteHandler(product._id)
                                         }

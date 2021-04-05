@@ -69,7 +69,7 @@ const LoginScreen = ({ location, history }) => {
 
             <Row className="py-3">
                 <Col>
-                    New Customer? 
+                    New Customer? &nbsp;
                     <Link
                         to={
                             redirect

@@ -34,7 +34,7 @@ const Header = () => {
 
                         <Nav className="ml-auto">
                             {userInfo && userInfo.isAdmin && (
-                                <NavDropdown title="Admin" id="adminMenu">
+                                <NavDropdown title="Admin Menu" id="adminMenu">
                                     <LinkContainer to="/admin/userlist">
                                         <NavDropdown.Item>
                                             Users

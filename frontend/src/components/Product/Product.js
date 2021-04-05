@@ -5,14 +5,14 @@ import { NavLink } from "react-router-dom";
 
 const Product = ({ product }) => {
     return (
-        <Card className="my-3 p-3 rounded">
+        <Card className="my-3 p-3">
             <NavLink to={`/product/${product._id}`}>
                 <Card.Img src={product.image} variant="top" />
             </NavLink>
 
-            <Card.Body>
+            <Card.Body className="pb-0">
                 <NavLink to={`/product/${product._id}`}>
-                    <Card.Title as="div">{product.name}</Card.Title>
+                    <Card.Title as="div" className='text-primary '>{product.name}</Card.Title>
                 </NavLink>
 
                 <Card.Text as="div">

@@ -1,70 +1,120 @@
-# Getting Started with Create React App
+# ProShop eCommerce Platform
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> eCommerce platform built with the MERN stack & Redux.
 
-## Available Scripts
+[ilonikso-proshop-app.herokuapp.com](https://ilonikso-proshop-app.herokuapp.com)
 
-In the project directory, you can run:
+This is the course project for my [MERN eCommerce From Scratch](https://www.udemy.com/course/mern-ecommerce) course
 
-### `npm start`
+![screenshot](https://github.com/ilonikso/proshop/blob/master/uploads/screenshot.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Stack
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- ReactJS + React Hooks
+- Redux
+- Express JS
+- MongoDB
+- Node JS
+- React Router
+- Redux thunk
+- React Bootstrap
+- Axios
+- React Helmet
 
-### `npm test`
+## Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Full featured shopping cart
+- Product reviews and ratings
+- Top products carousel
+- Product pagination
+- Product search feature
+- User profile with orders
+- Admin product management
+- Admin user management
+- Admin Order details page
+- Mark orders as delivered option
+- Checkout process (shipping, payment method, etc)
+- PayPal / credit card integration
+- Database seeder (products & users)
 
-### `npm run build`
+## Usage
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### ES Modules in Node
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+We us ECMAScript Modules in the backend in this project. Be sure to have at least Node v14.6+ or you will need to add the "--experimental-modules" flag.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Also, when importing a file (not a package), be sure to add .js at the end or you will get a "module not found" error
 
-### `npm run eject`
+You can also install and setup Babel if you would like
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Env Variables
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Create a .env file in then root and add the following
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```
+NODE_ENV = development
+PORT = 5000
+MONGO_URI = your mongodb uri
+JWT_SECRET = 'abc123'
+PAYPAL_CLIENT_ID = your paypal client id
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Install Dependencies (frontend & backend)
 
-## Learn More
+```
+npm install
+cd frontend
+npm install
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Run
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+# Run frontend (:3000) & backend (:5000)
+npm run dev
 
-### Code Splitting
+# Run backend only
+npm run server
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Build & Deploy
 
-### Analyzing the Bundle Size
+```
+# Create frontend prod build
+cd frontend
+npm run build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+There is a Heroku postbuild script, so if you push to Heroku, no need to build manually for deployment to Heroku
 
-### Making a Progressive Web App
+### Seed Database
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+You can use the following commands to seed the database with some sample users and products as well as destroy all data
 
-### Advanced Configuration
+```
+# Import data
+npm run data:import
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+# Destroy data
+npm run data:destroy
+```
 
-### Deployment
+```
+Sample User Logins
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+admin@example.com (Admin)
+123456
 
-### `npm run build` fails to minify
+john@example.com (Customer)
+123456
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+jane@example.com (Customer)
+123456
+```
+
+
+## License
+
+The MIT License
+
+Copyright (c) 2020 Traversy Media https://traversymedia.com
